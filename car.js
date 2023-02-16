@@ -15,9 +15,9 @@ class Car {
     this.sensor = new Sensor(this)
   }
 
-  update() {
+  update(roadBoarders) {
     this.#move()
-    this.sensor.update()
+    this.sensor.update(roadBoarders)
   }
 
   #move() {
