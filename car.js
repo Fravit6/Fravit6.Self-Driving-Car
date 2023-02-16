@@ -77,6 +77,7 @@ class Car {
 
     const alpha = Math.atan2(this.width, this.height)
 
+    // il calcolo tiene conto dell'angolo di curvatura della macchina
     // angolo top-dx
     points.push({
       x: this.x - Math.sin(this.angle - alpha) * rad,
