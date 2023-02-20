@@ -12,8 +12,15 @@ class Car {
     this.angle = 0
     this.damaged = false
 
+    // Car autocontrollata
+    this.useBrain = controlType === 'AI'
+
+    // Car del traffico
     if (controlType != 'DUMMY') {
       this.sensor = new Sensor(this)
+      // Livello con i sensori, un livello hidden e l'ultimo livello di output con i 4 nodi
+      // Down, Gira sx, gira dx e UP
+      this.brain = new NeuralNetwork([this.sensor.rayCount, 6, 4])
     }
 
     this.controls = new Controls(controlType)
@@ -25,7 +32,21 @@ class Car {
       this.polygon = this.#createPolygon()
       this.damaged = this.#assessDamage(roadBoarders, traffic)
     }
-    if (this.sensor) this.sensor.update(roadBoarders, traffic)
+    if (this.sensor) {
+      this.sensor.update(roadBoarders, traffic)
+      // Offset con valore che si avvicina ad 1 man mano che l'ostacolo è vicino
+      const offsets = this.sensor.readings.map((s) => (!s ? 0 : 1 - s.offset))
+
+      const outputs = NeuralNetwork.feedForward(offsets, this.brain)
+      console.log(outputs)
+
+      if (this.useBrain) {
+        this.controls.forward = outputs[0]
+        this.controls.left = outputs[1]
+        this.controls.right = outputs[2]
+        this.controls.reverse = outputs[3]
+      }
+    }
   }
 
   #move() {
