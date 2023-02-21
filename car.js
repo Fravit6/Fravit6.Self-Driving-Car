@@ -140,7 +140,7 @@ class Car {
     return false
   }
 
-  draw(ctx, color) {
+  draw(ctx, color, drawSensor = false) {
     ctx.fillStyle = color
     if (this.damaged) ctx.fillStyle = 'gray'
     ctx.beginPath()
@@ -152,6 +152,6 @@ class Car {
 
     ctx.fill()
 
-    if (this.sensor) this.sensor.draw(ctx)
+    if (this.sensor && drawSensor) this.sensor.draw(ctx)
   }
 }
