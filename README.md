@@ -8,3 +8,10 @@ Self-driving car simulation using JavaScript with no libraries
 ## Demo
 
 https://fravit6.github.io/Fravit6.Self-Driving-Car/
+
+
+## Screenshots
+
+![Screenshot](https://i.ibb.co/CzTgw2h/Schermata-del-2023-02-22-13-48-49.png)
+
+![Screenshot](https://i.ibb.co/x3cFjfT/screen.png)
