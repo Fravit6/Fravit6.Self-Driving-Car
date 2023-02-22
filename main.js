@@ -10,13 +10,28 @@ const road = new Road(carCanvas.width / 2, carCanvas.width * 0.9)
 // const car = new Car(road.getLaneCenter(1), 100, 30, 50, 'KEYS')
 const car = new Car(road.getLaneCenter(1), 100, 30, 50, 'AI')
 
-const cars = generateCars(100)
+const cars = generateCars(1000)
 let bestCar = cars[0]
+
+// Se avevo già effettuato una run
 if (localStorage.getItem('bestBrain')) {
-  bestCar.brain = JSON.parse(localStorage.getItem('bestBrain'))
+  for (let i = 0; i < cars.length; i++) {
+    // sostituisco la rete con quella el campione precedente
+    cars[i].brain = JSON.parse(localStorage.getItem('bestBrain'))
+    // Tutte tranne la prima saranno leggermente diverse
+    if (i !== 0) NeuralNetwork.mutate(cars[i].brain, 0.1)
+  }
 }
 
-const traffic = [new Car(road.getLaneCenter(1), -100, 30, 50, 'DUMMY', 2)]
+const traffic = [
+  new Car(road.getLaneCenter(1), -100, 30, 50, 'DUMMY', 2),
+  new Car(road.getLaneCenter(0), -300, 30, 50, 'DUMMY', 2),
+  new Car(road.getLaneCenter(2), -300, 30, 50, 'DUMMY', 2),
+  new Car(road.getLaneCenter(0), -500, 30, 50, 'DUMMY', 2),
+  new Car(road.getLaneCenter(1), -500, 30, 50, 'DUMMY', 2),
+  new Car(road.getLaneCenter(1), -700, 30, 50, 'DUMMY', 2),
+  new Car(road.getLaneCenter(2), -700, 30, 50, 'DUMMY', 2),
+]
 
 animate()
 
